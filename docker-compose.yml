@@ -1,0 +1,12 @@
+version: '3.8'
+services:
+  bot-1:
+    build: .
+    environment: ["SHARD_ID=0","SHARD_COUNT=4","BOT_TOKEN=${BOT_TOKEN}","DATABASE_URL=${DATABASE_URL}","REDIS_URL=${REDIS_URL}"]
+  bot-2: {build: ., environment: ["SHARD_ID=1","SHARD_COUNT=4","BOT_TOKEN=${BOT_TOKEN}","DATABASE_URL=${DATABASE_URL}","REDIS_URL=${REDIS_URL}"]}
+  bot-3: {build: ., environment: ["SHARD_ID=2","SHARD_COUNT=4","BOT_TOKEN=${BOT_TOKEN}","DATABASE_URL=${DATABASE_URL}","REDIS_URL=${REDIS_URL}"]}
+  bot-4: {build: ., environment: ["SHARD_ID=3","SHARD_COUNT=4","BOT_TOKEN=${BOT_TOKEN}","DATABASE_URL=${DATABASE_URL}","REDIS_URL=${REDIS_URL}"]}
+  web: {build: ./web, ports: ["8000:8000"]}
+  mysql: {image: mysql:8.0, environment: ["MYSQL_ROOT_PASSWORD=${MYSQL_PASSWORD}"]}
+  redis: {image: redis:7-alpine}
+  nginx: {image: nginx:alpine, ports: ["80:80","443:443"]}
